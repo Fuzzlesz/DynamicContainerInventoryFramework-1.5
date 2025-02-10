@@ -1,6 +1,7 @@
 #include "hooks/hooks.h"
 #include "settings/INISettings.h"
 #include "settings/JSONSettings.h"
+#include "merchantCache/merchantCache.h"
 
 namespace
 {
@@ -53,6 +54,7 @@ static void MessageEventCallback(SKSE::MessagingInterface::Message* a_msg)
 	switch (a_msg->type) {
 	case SKSE::MessagingInterface::kDataLoaded:
 		Hooks::ContainerManager::GetSingleton()->WarmCache();
+		MerchantCache::MerchantCache::GetSingleton()->BuildCache();
 		logger::info("If there are any config errors, they'll show here:");
 		Settings::JSON::Read();
 		logger::info("=================================================");
